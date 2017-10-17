@@ -37,7 +37,6 @@ public class AsteroidField : MonoBehaviour {
 
     public void Pause ()
     {
-        Debug.Log("AsteroidField pausing asteroids");
         foreach (GameObject asteroid in asteroids)
         {
             asteroid.GetComponent<Pausible>().Pause();
@@ -47,7 +46,6 @@ public class AsteroidField : MonoBehaviour {
 
     public void Resume ()
     {
-        Debug.Log("AsteroidField resuming asteroids");
         foreach (GameObject asteroid in asteroids)
         {
             asteroid.GetComponent<Pausible>().Resume();

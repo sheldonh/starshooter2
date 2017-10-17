@@ -79,7 +79,6 @@ public class Ship : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("shipSpace"))
         {
-            Debug.Log("Ship exited shipSpace");
             rb.AddForce(-rb.velocity);
         }
     }
@@ -87,6 +86,6 @@ public class Ship : MonoBehaviour {
     public void Reset()
     {
         rb.velocity = Vector3.zero;
-        transform.position = new Vector3(-7 , 0, 0);
+        transform.position = new Vector3(-6 , 0, 0);
     }
 }

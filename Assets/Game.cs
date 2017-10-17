@@ -71,7 +71,6 @@ public class Game : MonoBehaviour {
 
     void SetStateNewGame ()
     {
-        Debug.Log("Game state: NewGame");
         state = State.NewGame;
         ship.GetComponent<Pausible>().Pause();
         //asteroidField.GetComponent<AsteroidField>().Pause();
@@ -86,7 +85,6 @@ public class Game : MonoBehaviour {
 
     void SetStatePlaying ()
     {
-        Debug.Log("Game state: Playing");
         state = State.Playing;
         ship.GetComponent<Pausible>().Resume();
         asteroidField.GetComponent<AsteroidField>().Resume();
@@ -97,7 +95,6 @@ public class Game : MonoBehaviour {
 
     void SetStatePaused ()
     {
-        Debug.Log("Game state: Paused");
         state = State.Paused;
         ship.GetComponent<Pausible>().Pause();
         asteroidField.GetComponent<AsteroidField>().Pause();
@@ -111,7 +108,6 @@ public class Game : MonoBehaviour {
 
     public void SetStateGameOver ()
     {
-        Debug.Log("Game state: GameOver");
         state = State.GameOver;
 
         //ship.GetComponent<Pausible>().Pause();
@@ -125,7 +121,6 @@ public class Game : MonoBehaviour {
 
     public void SetStateGameWon()
     {
-        Debug.Log("Game state: GameWon");
         state = State.GameWon;
 
         ship.GetComponent<Pausible>().Pause();
