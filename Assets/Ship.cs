@@ -7,6 +7,7 @@ public class Ship : MonoBehaviour {
     public float thrustForce = 1f;
     public Game game;
     public GameObject explosionPrefab;
+    public AudioClip collisionSound;
 
     Rigidbody rb;
     float topY = 4.5f;
@@ -60,6 +61,7 @@ public class Ship : MonoBehaviour {
     {
         if (other.CompareTag("asteroid"))
         {
+            GetComponent<AudioSource>().PlayOneShot(collisionSound, 1f);
             GameObject explosion = Instantiate(explosionPrefab);
             explosion.GetComponent<Transform>().SetPositionAndRotation(rb.position, rb.rotation);
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
