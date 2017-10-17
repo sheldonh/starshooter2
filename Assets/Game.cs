@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
     public Text heading;
     public GameObject ship;
     public GameObject asteroidField;
+    public AudioClip gameWonSound;
 
     enum State { NewGame, Playing, Paused, GameOver, GameWon };
     State state;
@@ -134,5 +135,6 @@ public class Game : MonoBehaviour {
         help.enabled = true;
         heading.text = "YOU WON";
         heading.enabled = true;
+        GetComponent<AudioSource>().PlayOneShot(gameWonSound);
     }
 }
