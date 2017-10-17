@@ -61,7 +61,10 @@ public class Ship : MonoBehaviour {
     {
         if (other.CompareTag("asteroid"))
         {
+            other.GetComponent<Asteroid>().PlayCollisionSound();
+            GetComponent<AudioSource>().pitch = 0.5f;
             GetComponent<AudioSource>().PlayOneShot(collisionSound, 1f);
+
             GameObject explosion = Instantiate(explosionPrefab);
             explosion.GetComponent<Transform>().SetPositionAndRotation(rb.position, rb.rotation);
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();

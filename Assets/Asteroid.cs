@@ -11,6 +11,17 @@ public class Asteroid : MonoBehaviour {
 
     }
 	
+    public void PlayCollisionSound(float colliderMass = 0f, float mass = 0f)
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (colliderMass == 0f)
+            colliderMass = 0.2f;
+        if (mass == 0f)
+            mass = GetComponent<Rigidbody>().mass;
+        audioSource.pitch = 0f + (2 * mass) + colliderMass; // 0.6..1.5 but assumes mass 0.2-0.5
+        audioSource.PlayOneShot(collisionSound);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         Collider collider = collision.collider;
@@ -18,9 +29,7 @@ public class Asteroid : MonoBehaviour {
         float mass = GetComponent<Rigidbody>().mass;
         if (collider.gameObject.CompareTag("asteroid") && mass > colliderMass)
         {
-            AudioSource audioSource = GetComponent<AudioSource>();
-            audioSource.pitch = 0f + (2 * mass) + colliderMass; // 0.6..1.5 but assumes mass 0.2-0.5
-            audioSource.PlayOneShot(collisionSound);
+            PlayCollisionSound(colliderMass, mass);
         }
     }
 
