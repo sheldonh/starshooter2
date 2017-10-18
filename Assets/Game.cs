@@ -11,6 +11,7 @@ public class Game : MonoBehaviour {
     public GameObject ship;
     public GameObject asteroidField;
     public AudioClip gameWonSound;
+    public GameObject shipPrefab;
 
     enum State { NewGame, Playing, Paused, GameOver, GameWon };
     State state;
@@ -34,7 +35,11 @@ public class Game : MonoBehaviour {
                 if (Input.GetKeyUp("space"))
                 {
                     score = 0;
-                    ship.GetComponent<Ship>().Reset();
+                    if (ship != null)
+                        Destroy(ship);
+                    ship = Instantiate<GameObject>(shipPrefab);
+                    ship.GetComponent<Ship>().game = this;
+                    asteroidField.GetComponent<AsteroidField>().ship = ship;
                     asteroidField.GetComponent<AsteroidField>().Reset();
                     SetStatePlaying();
                 }
@@ -72,7 +77,7 @@ public class Game : MonoBehaviour {
     void SetStateNewGame ()
     {
         state = State.NewGame;
-        ship.GetComponent<Pausible>().Pause();
+        //ship.GetComponent<Pausible>().Pause();
         //asteroidField.GetComponent<AsteroidField>().Pause();
 
         scoreBoard.enabled = false;
@@ -110,7 +115,8 @@ public class Game : MonoBehaviour {
     {
         state = State.GameOver;
 
-        //ship.GetComponent<Pausible>().Pause();
+        if (ship != null)
+            Destroy(ship);
         //asteroidField.GetComponent<AsteroidField>().Pause();
         scoreBoard.enabled = true;
         help.text = "Press SPACE to restart or ESC to quit.";

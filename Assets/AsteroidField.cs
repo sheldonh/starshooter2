@@ -115,7 +115,7 @@ public class AsteroidField : MonoBehaviour {
         t.localScale = Vector3.one * rb.mass;
         rb.angularVelocity = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         float speed = Random.Range(5f, 7f);
-        if (atPlayer)
+        if (atPlayer && ship != null)
         {
             rb.velocity = (ship.GetComponent<Rigidbody>().position - rb.position).normalized * speed;
         } else

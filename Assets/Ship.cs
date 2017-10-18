@@ -6,6 +6,7 @@ public class Ship : MonoBehaviour {
 
     public float thrustForce = 1f;
     public Game game;
+    public GameObject audioSourcePrefab;
     public GameObject explosionPrefab;
     public AudioClip collisionSound;
 
@@ -62,15 +63,17 @@ public class Ship : MonoBehaviour {
         if (other.CompareTag("asteroid"))
         {
             other.GetComponent<Asteroid>().PlayCollisionSound();
-            GetComponent<AudioSource>().pitch = 0.5f;
-            GetComponent<AudioSource>().PlayOneShot(collisionSound, 1f);
+
+            AudioSource audioSource = Instantiate(audioSourcePrefab).GetComponent<AudioSource>();
+            audioSource.pitch = 0.5f;
+            audioSource.PlayOneShot(collisionSound, 1f);
+            Destroy(audioSource.gameObject, 5f);
 
             GameObject explosion = Instantiate(explosionPrefab);
             explosion.GetComponent<Transform>().SetPositionAndRotation(rb.position, rb.rotation);
-            ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
-            ps.Play();
-            Destroy(ps, 5.0f);
-            transform.position = new Vector3(-20, 0, 0);
+            explosion.GetComponent<ParticleSystem>().Play();
+            Destroy(explosion, 5f);
+
             game.GetComponent<Game>().SetStateGameOver();
         }
     }
