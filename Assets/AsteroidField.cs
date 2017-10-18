@@ -14,12 +14,15 @@ public class AsteroidField : MonoBehaviour {
     public GameObject ship;
 
     int relaunches;
+    Bounds launchBounds;
+    float launchMaxX;
     Stack<GameObject> spareAsteroids = new Stack<GameObject>();
     Stack<GameObject> asteroids = new Stack<GameObject>();
 
     // Use this for initialization
     void Start ()
     {
+        launchBounds = GetLaunchBounds();
         for (int i = 0; i < totalAsteroids; i++)
         {
             GameObject asteroid = Instantiate<GameObject>(asteroidPrefab);
@@ -107,7 +110,7 @@ public class AsteroidField : MonoBehaviour {
         asteroid.SetActive(false);
         Rigidbody rb = asteroid.GetComponent<Rigidbody>();
         Transform t = asteroid.GetComponent<Transform>();
-        t.SetPositionAndRotation(new Vector3(Random.Range(11.5f, 30f), Random.Range(-4.5f, 4.5f), 0f), Quaternion.identity);
+        t.SetPositionAndRotation(RandomPositionInBounds(launchBounds), Quaternion.identity);
         rb.mass = Random.Range(minSize, maxSize);
         t.localScale = Vector3.one * rb.mass;
         rb.angularVelocity = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -121,5 +124,24 @@ public class AsteroidField : MonoBehaviour {
         }
         
         asteroid.SetActive(true);
+    }
+
+    Bounds GetLaunchBounds()
+    {
+        Bounds b = GetComponent<Collider>().bounds;
+        Bounds launchBounds = new Bounds(
+            new Vector3(b.center.x + (b.size.x / 6), b.center.y, b.center.z),
+            new Vector3(b.size.x * 2 / 3, b.size.y, 0));
+        Debug.Log("Collider bounds: " + b);
+        Debug.Log("Launch bounds:   " + launchBounds);
+        return launchBounds;
+    }
+
+    Vector3 RandomPositionInBounds(Bounds b)
+    {
+        return new Vector3(
+            Random.Range(b.min.x, b.max.x),
+            Random.Range(b.min.y, b.max.y),
+            Random.Range(b.min.z, b.max.z));
     }
 }
