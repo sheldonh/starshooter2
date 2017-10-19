@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
     public Text heading;
     public GameObject ship;
     public GameObject asteroidField;
+    public GameObject pathMaker;
     public AudioClip gameWonSound;
     public GameObject shipPrefab;
 
@@ -40,6 +41,7 @@ public class Game : MonoBehaviour {
                     ship = Instantiate<GameObject>(shipPrefab);
                     ship.GetComponent<Ship>().game = this;
                     asteroidField.GetComponent<AsteroidField>().ship = ship;
+                    pathMaker.GetComponent<PathMaker>().ship = ship;
                     asteroidField.GetComponent<AsteroidField>().Reset();
                     SetStatePlaying();
                 }

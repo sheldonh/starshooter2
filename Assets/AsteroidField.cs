@@ -107,7 +107,7 @@ public class AsteroidField : MonoBehaviour {
         t.SetPositionAndRotation(new Vector3(50f, 0f, 0f), Quaternion.identity);
     }
 
-    void LaunchAsteroid (GameObject asteroid, bool atPlayer = false)
+    public void LaunchAsteroid (GameObject asteroid, bool atPlayer = false)
     {
         asteroid.SetActive(false);
         Rigidbody rb = asteroid.GetComponent<Rigidbody>();
