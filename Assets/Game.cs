@@ -80,8 +80,6 @@ public class Game : MonoBehaviour {
     void SetStateNewGame ()
     {
         state = State.NewGame;
-        //ship.GetComponent<Pausible>().Pause();
-        //asteroidField.GetComponent<AsteroidField>().Pause();
 
         scoreBoard.enabled = false;
         controls.enabled = true;
@@ -99,6 +97,8 @@ public class Game : MonoBehaviour {
 
         ship.GetComponent<Pausible>().Resume();
         asteroidField.GetComponent<AsteroidField>().Resume();
+        pathMaker.GetComponent<Pausible>().Resume();
+
         scoreBoard.enabled = true;
         help.enabled = false;
         heading.enabled = false;
@@ -109,6 +109,7 @@ public class Game : MonoBehaviour {
         state = State.Paused;
         ship.GetComponent<Pausible>().Pause();
         asteroidField.GetComponent<AsteroidField>().Pause();
+        pathMaker.GetComponent<Pausible>().Pause();
 
         scoreBoard.enabled = true;
         controls.enabled = true;
@@ -141,6 +142,7 @@ public class Game : MonoBehaviour {
 
         ship.GetComponent<Pausible>().Pause();
         asteroidField.GetComponent<AsteroidField>().Pause();
+        pathMaker.GetComponent<Pausible>().Pause();
 
         scoreBoard.enabled = true;
         controls.enabled = true;

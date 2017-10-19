@@ -24,6 +24,8 @@ public class AsteroidField : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        BoxCollider box = GetComponent<BoxCollider>();
+        box.size = new Vector3(box.size.x, box.size.y + maxSize * 2, box.size.z);
         launchBounds = GetLaunchBounds();
         for (int i = 0; i < totalAsteroids; i++)
         {
@@ -79,7 +81,7 @@ public class AsteroidField : MonoBehaviour {
 
     void OnTriggerExit (Collider other)
     {
-        if (other.gameObject.CompareTag("asteroid"))
+        if (enabled && other.gameObject.CompareTag("asteroid"))
         {
             if (!game.GetComponent<Game>().ScoreUp(1))
             {
@@ -122,7 +124,7 @@ public class AsteroidField : MonoBehaviour {
             rb.velocity = (ship.GetComponent<Rigidbody>().position - rb.position).normalized * speed;
         } else
         {
-            rb.velocity = new Vector3(-1f, Random.Range(-0.1f, 0.1f), 0f).normalized * speed;
+            rb.velocity = new Vector3(-1f, Random.Range(-0.025f, 0.025f), 0f).normalized * speed;
         }
         
         asteroid.SetActive(true);
