@@ -6,6 +6,7 @@ public class Game : MonoBehaviour {
     int score;
     public int winScore;
     public Text scoreBoard;
+    public Text controls;
     public Text help;
     public Text heading;
     public GameObject ship;
@@ -83,6 +84,7 @@ public class Game : MonoBehaviour {
         //asteroidField.GetComponent<AsteroidField>().Pause();
 
         scoreBoard.enabled = false;
+        controls.enabled = true;
 
         help.text = "Press SPACE to start or ESC to quit.";
         help.enabled = true;
@@ -93,6 +95,8 @@ public class Game : MonoBehaviour {
     void SetStatePlaying ()
     {
         state = State.Playing;
+        controls.enabled = false;
+
         ship.GetComponent<Pausible>().Resume();
         asteroidField.GetComponent<AsteroidField>().Resume();
         scoreBoard.enabled = true;
@@ -107,6 +111,8 @@ public class Game : MonoBehaviour {
         asteroidField.GetComponent<AsteroidField>().Pause();
 
         scoreBoard.enabled = true;
+        controls.enabled = true;
+
         help.text = "Press SPACE to resume or ESC to quit.";
         help.enabled = true;
         heading.text = "PAUSED";
@@ -119,8 +125,10 @@ public class Game : MonoBehaviour {
 
         if (ship != null)
             Destroy(ship);
-        //asteroidField.GetComponent<AsteroidField>().Pause();
+
         scoreBoard.enabled = true;
+        controls.enabled = true;
+
         help.text = "Press SPACE to restart or ESC to quit.";
         help.enabled = true;
         heading.text = "GAME OVER";
@@ -133,7 +141,10 @@ public class Game : MonoBehaviour {
 
         ship.GetComponent<Pausible>().Pause();
         asteroidField.GetComponent<AsteroidField>().Pause();
+
         scoreBoard.enabled = true;
+        controls.enabled = true;
+
         help.text = "Press SPACE to play again or ESC to quit.";
         help.enabled = true;
         heading.text = "YOU WON";
