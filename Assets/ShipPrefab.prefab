@@ -33,7 +33,7 @@ GameObject:
   - component: {fileID: 65728644647515578}
   - component: {fileID: 114683207382452482}
   - component: {fileID: 114570246152868552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShipPrefab
   m_TagString: ship
   m_Icon: {fileID: 0}
