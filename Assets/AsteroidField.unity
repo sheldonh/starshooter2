@@ -611,14 +611,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1768749733
+  randomSeed: 1975062668
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.8
+      scalar: 1.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -701,7 +701,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9044118, g: 0.7847103, b: 0.6051579, a: 0.5019608}
+      maxColor: {r: 0.9044118, g: 0.7847103, b: 0.6051579, a: 0.4392157}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1225,7 +1225,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 1.5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -7736,9 +7736,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidPrefab: {fileID: 1430826017249394, guid: e29394e8e5d5a194ca5d4a8ec3baf6ba,
     type: 2}
-  totalAsteroids: 500
+  totalAsteroids: 60
   initialAsteroids: 10
-  relaunchesPerSpare: 10
+  relaunchesPerSpare: 5
   minSize: 0.2
   maxSize: 0.4
   minSpeed: 5.5
