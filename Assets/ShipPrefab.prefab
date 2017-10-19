@@ -214,7 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ad7ac90c27fdc4e83e79aef1567cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustForce: 200
+  thrustForce: 250
+  torqueForce: 250
+  torqueSlerpFactor: 50
   game: {fileID: 0}
   audioSourcePrefab: {fileID: 1376049905214352, guid: fe76b6bfeae727b4989fe0166847eacd,
     type: 2}

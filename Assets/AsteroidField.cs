@@ -10,6 +10,8 @@ public class AsteroidField : MonoBehaviour {
     public int relaunchesPerSpare;
     public float minSize;
     public float maxSize;
+    public float minSpeed;
+    public float maxSpeed;
     public Game game;
     public GameObject ship;
 
@@ -29,7 +31,7 @@ public class AsteroidField : MonoBehaviour {
             asteroid.transform.SetParent(GetComponent<Transform>(), true);
             asteroid.tag = "asteroid";
             spareAsteroids.Push(asteroid);
-            storeAsteroid(asteroid);
+            StoreAsteroid(asteroid);
         }
     }
 
@@ -64,13 +66,13 @@ public class AsteroidField : MonoBehaviour {
         {
             GameObject asteroid = asteroids.Pop();
             spareAsteroids.Push(asteroid);
-            storeAsteroid(asteroid);
+            StoreAsteroid(asteroid);
         }
         for (int i = 0; i < initialAsteroids; i++)
         {
             GameObject asteroid = spareAsteroids.Pop();
             asteroids.Push(asteroid);
-            launchAsteroid(asteroid);
+            LaunchAsteroid(asteroid);
         }
         Pause();
     }
@@ -81,7 +83,7 @@ public class AsteroidField : MonoBehaviour {
         {
             if (!game.GetComponent<Game>().ScoreUp(1))
             {
-                launchAsteroid(other.gameObject);
+                LaunchAsteroid(other.gameObject);
                 relaunches += 1;
                 if (relaunches % relaunchesPerSpare == 0)
                 {
@@ -89,14 +91,14 @@ public class AsteroidField : MonoBehaviour {
                     {
                         GameObject asteroid = spareAsteroids.Pop();
                         asteroids.Push(asteroid);
-                        launchAsteroid(asteroid, true);
+                        LaunchAsteroid(asteroid, true);
                     }
                 }
             }
         }
     }
 
-    void storeAsteroid (GameObject asteroid)
+    void StoreAsteroid (GameObject asteroid)
     {
         asteroid.SetActive(false);
         Rigidbody rb = asteroid.GetComponent<Rigidbody>();
@@ -105,7 +107,7 @@ public class AsteroidField : MonoBehaviour {
         t.SetPositionAndRotation(new Vector3(50f, 0f, 0f), Quaternion.identity);
     }
 
-    void launchAsteroid (GameObject asteroid, bool atPlayer = false)
+    void LaunchAsteroid (GameObject asteroid, bool atPlayer = false)
     {
         asteroid.SetActive(false);
         Rigidbody rb = asteroid.GetComponent<Rigidbody>();
@@ -113,17 +115,30 @@ public class AsteroidField : MonoBehaviour {
         t.SetPositionAndRotation(RandomPositionInBounds(launchBounds), Quaternion.identity);
         rb.mass = Random.Range(minSize, maxSize);
         t.localScale = Vector3.one * rb.mass;
-        rb.angularVelocity = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        float speed = Random.Range(5f, 7f);
+        rb.angularVelocity = RandomSpin();
+        float speed = Random.Range(minSpeed, maxSpeed);
         if (atPlayer && ship != null)
         {
             rb.velocity = (ship.GetComponent<Rigidbody>().position - rb.position).normalized * speed;
         } else
         {
-            rb.velocity = new Vector3(-1f, Random.Range(-0.1f, 0.1f), 0f) * speed;
+            rb.velocity = new Vector3(-1f, Random.Range(-0.1f, 0.1f), 0f).normalized * speed;
         }
         
         asteroid.SetActive(true);
+    }
+
+    Vector3 RandomSpin ()
+    {
+        return new Vector3(
+            RandomSign() * Mathf.Log(Random.Range(1f, 10f), 3f),
+            RandomSign() * Mathf.Log(Random.Range(1f, 10f), 3f),
+            RandomSign() * Mathf.Log(Random.Range(1f, 10f), 3f));
+    }
+
+    int RandomSign()
+    {
+        return Random.Range(0, 2) * 2 - 1;
     }
 
     Bounds GetLaunchBounds()

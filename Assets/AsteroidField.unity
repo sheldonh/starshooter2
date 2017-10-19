@@ -4256,6 +4256,8 @@ MonoBehaviour:
   relaunchesPerSpare: 10
   minSize: 0.2
   maxSize: 0.4
+  minSpeed: 5.5
+  maxSpeed: 8
   game: {fileID: 1351309448}
   ship: {fileID: 0}
 --- !u!4 &1445816612

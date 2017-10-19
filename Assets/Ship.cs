@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour {
 
-    public float thrustForce = 1f;
+    public float thrustForce;
+    public float torqueForce;
+    public float torqueSlerpFactor;
     public Game game;
     public GameObject audioSourcePrefab;
     public GameObject explosionPrefab;
@@ -21,6 +23,7 @@ public class Ship : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         levelRotation = rb.rotation;
+
     }
 
     // Update is called once per frame
@@ -29,20 +32,20 @@ public class Ship : MonoBehaviour {
         if ((Input.GetKey("up") || Input.GetKey("q")) && !(Input.GetKey("down") || Input.GetKey("a")) && rb.position.y < topY)
         {
             rb.AddForce(Vector3.up * thrustForce);
-            rb.AddTorque(Vector3.right * thrustForce);
+            rb.AddTorque(Vector3.right * torqueForce);
             lastTorque = Vector3.right;
         }
         else if ((Input.GetKey("down") || Input.GetKey("a")) && !(Input.GetKey("up") || Input.GetKey("q")) && rb.position.y > bottomY)
         {
             rb.AddForce(Vector3.down * thrustForce);
-            rb.AddTorque(Vector3.left * thrustForce);
+            rb.AddTorque(Vector3.left * torqueForce);
             lastTorque = Vector3.left;
         } else
         {
             if (Quaternion.Angle(transform.rotation, levelRotation) < 90.0f)
             {
                 // //With Slerp:
-                transform.rotation = Quaternion.Slerp(transform.rotation, levelRotation, 0.1f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, levelRotation, torqueForce * (Time.fixedDeltaTime / torqueSlerpFactor));
 
                 // //Without Slerp:
                 //Quaternion rot = Quaternion.Inverse(transform.rotation);
@@ -51,9 +54,9 @@ public class Ship : MonoBehaviour {
             else
             {
                 if (lastTorque == Vector3.left)
-                    rb.AddTorque(Vector3.left * thrustForce);
+                    rb.AddTorque(Vector3.left * torqueForce);
                 else if (lastTorque == Vector3.right)
-                    rb.AddTorque(Vector3.right * thrustForce);
+                    rb.AddTorque(Vector3.right * torqueForce);
             }
         }
     }
