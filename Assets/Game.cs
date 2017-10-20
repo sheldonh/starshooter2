@@ -28,7 +28,7 @@ public class Game : MonoBehaviour {
         switch (state)
         {
             case State.Playing:
-                if (Input.GetKeyUp("space"))
+                if (Input.GetKeyUp("space") || Input.GetKeyUp("escape"))
                     SetStatePaused();
                 break;
             case State.NewGame:
